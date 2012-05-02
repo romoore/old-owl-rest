@@ -12,13 +12,11 @@
             <artifactId>jersey-grizzly2</artifactId>
             <version>${jersey-version}</version>
         </dependency>
-        <!-- uncomment this to get JSON support:
          <dependency>
             <groupId>com.sun.jersey</groupId>
             <artifactId>jersey-json</artifactId>
             <version>${jersey-version}</version>
         </dependency>
-        -->
         <!-- uncomment this to get Fastinfoset support:
          <dependency>
             <groupId>com.sun.jersey</groupId>
@@ -78,6 +76,14 @@
                 <configuration>
                     <mainClass>org.grailrtls.Main</mainClass>
                 </configuration>
+            </plugin>
+            <plugin>
+              <groupId>org.apache.maven.plugins</groupId>
+              <artifactId>maven-war-plugin</artifactId>
+              <version>2.2</version>
+              <configuration>
+                <failOnMissingWebXml>false</failOnMissingWebXml>
+              </configuration>
             </plugin>
         </plugins>
     </build>
