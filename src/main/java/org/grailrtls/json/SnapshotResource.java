@@ -2,6 +2,7 @@ package org.grailrtls.json;
 
 import java.util.Collection;
 
+import javax.ws.rs.DefaultValue;
 import javax.ws.rs.GET;
 import javax.ws.rs.Path;
 import javax.ws.rs.Produces;
@@ -10,14 +11,22 @@ import javax.ws.rs.core.MediaType;
 
 import org.grailrtls.libworldmodel.client.Response;
 
-
 @Path("/snapshot")
 public class SnapshotResource {
 
   @Produces(MediaType.APPLICATION_JSON)
   @GET
-  public WorldState[] getAccount(@QueryParam("uri") final String uri) {
-    Response resp = WorldModelJson.cwc.getCurrentSnapshot(uri, ".*");
+  public WorldState[] getCurrentSnapshot(@QueryParam("uri") final String uri,
+      @QueryParam("attribute") @DefaultValue(".*") final String attribute,
+      @QueryParam("timestamp") @DefaultValue("0") final long timestamp) {
+    
+    
+    Response resp = null;
+    if(timestamp == 0){
+      resp = WorldModelJson.cwc.getCurrentSnapshot(uri, attribute);
+    }else{
+      resp = WorldModelJson.cwc.getSnapshot(uri, timestamp, timestamp, attribute);
+    }
     org.grailrtls.libworldmodel.client.WorldState state;
     try {
       state = resp.get();
@@ -25,22 +34,23 @@ public class SnapshotResource {
       e.printStackTrace();
       return null;
     }
-    
-    if(resp == null || state == null || state.getURIs().size() == 0){
-      return null;
+
+    if (resp == null || state == null || state.getURIs().size() == 0) {
+      return new WorldState[]{};
     }
-    
+
     WorldState[] respStates = new WorldState[state.getURIs().size()];
     int i = 0;
-    for(String rUri : state.getURIs()){
-      
+    for (String rUri : state.getURIs()) {
+
       WorldState iState = new WorldState();
       iState.setUri(rUri);
-      
-      Collection<org.grailrtls.libworldmodel.client.protocol.messages.Attribute> rAttrs = state.getState(rUri);
+
+      Collection<org.grailrtls.libworldmodel.client.protocol.messages.Attribute> rAttrs = state
+          .getState(rUri);
       Attribute[] attrs = new Attribute[rAttrs.size()];
       int j = 0;
-      for(org.grailrtls.libworldmodel.client.protocol.messages.Attribute a : rAttrs){
+      for (org.grailrtls.libworldmodel.client.protocol.messages.Attribute a : rAttrs) {
         Attribute newAttr = new Attribute();
         newAttr.setAttributeName(a.getAttributeName());
         newAttr.setOriginName(a.getOriginName());
@@ -52,8 +62,8 @@ public class SnapshotResource {
       iState.setAttributes(attrs);
       respStates[i++] = iState;
     }
-    
+
     return respStates;
-      
+
   }
 }
