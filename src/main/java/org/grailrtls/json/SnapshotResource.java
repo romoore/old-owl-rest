@@ -32,7 +32,7 @@ public class SnapshotResource {
       state = resp.get();
     } catch (Exception e) {
       e.printStackTrace();
-      return null;
+      return new WorldState[]{};
     }
 
     if (resp == null || state == null || state.getURIs().size() == 0) {

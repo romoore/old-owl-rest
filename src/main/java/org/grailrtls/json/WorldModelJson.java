@@ -36,6 +36,7 @@ public class WorldModelJson extends Application {
 
     // register root resources
     classes.add(SnapshotResource.class);
+    classes.add(RangeResource.class);
 
     // register Jackson ObjectMapper resolver
     classes.add(ObjectMapper.class);
