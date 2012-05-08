@@ -8,6 +8,8 @@ import javax.ws.rs.core.Application;
 import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.module.SimpleModule;
+import org.grailrtls.json.resources.RangeResource;
+import org.grailrtls.json.resources.SnapshotResource;
 import org.grailrtls.libworldmodel.client.ClientWorldConnection;
 
 public class WorldModelJson extends Application {

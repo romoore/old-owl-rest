@@ -1,5 +1,6 @@
-package org.grailrtls.json;
+package org.grailrtls.json.resources;
 
+import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
 import java.util.Collection;
 
@@ -10,6 +11,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.grailrtls.json.WorldModelJson;
+import org.grailrtls.json.model.Attribute;
+import org.grailrtls.json.model.WorldState;
 import org.grailrtls.libworldmodel.client.Response;
 import org.grailrtls.libworldmodel.client.StepResponse;
 
@@ -28,11 +32,38 @@ public class RangeResource {
 
     ArrayList<WorldState> respStates = new ArrayList<WorldState>();
     while (!resp.isComplete() && !resp.isError()) {
+
+      try {
+        Thread.sleep(1);
+      } catch (InterruptedException ie) {
+
+      } finally {
+        continue;
+      }
+
+    }
+
+    if (resp.isError()) {
+      WorldState errState = new WorldState();
+      errState.setUri("error");
+      Attribute errAttr = new Attribute();
+      errAttr.setAttributeName("message");
+      try {
+        errAttr.setData(resp.getError().getMessage().getBytes("UTF-16BE"));
+      } catch (UnsupportedEncodingException e) {
+        // FIXME: Handle this when we're ready to release.
+        // This really shouldn't happen...
+      }
+      errState.setAttributes(new Attribute[] { errAttr });
+      return new WorldState[] { errState };
+    }
+
+    while (resp.hasNext()) {
       try {
         state = resp.next();
       } catch (Exception e) {
         e.printStackTrace();
-        return respStates.toArray(new WorldState[] {});
+        break;
       }
 
       if (resp == null || state == null || state.getURIs().size() == 0) {
@@ -61,9 +92,8 @@ public class RangeResource {
         respStates.add(iState);
       }
     }
-    
-    
-    return respStates.toArray(new WorldState[]{});
+
+    return respStates.toArray(new WorldState[] {});
 
   }
 }

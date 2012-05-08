@@ -1,4 +1,4 @@
-package org.grailrtls.json;
+package org.grailrtls.json.model;
 
 
 public class Attribute{

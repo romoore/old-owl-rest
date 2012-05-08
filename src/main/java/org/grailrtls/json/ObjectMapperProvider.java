@@ -6,6 +6,8 @@ import javax.ws.rs.ext.Provider;
 import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.module.SimpleModule;
+import org.grailrtls.json.model.Attribute;
+import org.grailrtls.json.serialize.AttributeSerializer;
 
 @Provider
 public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {

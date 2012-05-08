@@ -1,4 +1,4 @@
-package org.grailrtls.json;
+package org.grailrtls.json.resources;
 
 import java.util.Collection;
 
@@ -9,6 +9,9 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
+import org.grailrtls.json.WorldModelJson;
+import org.grailrtls.json.model.Attribute;
+import org.grailrtls.json.model.WorldState;
 import org.grailrtls.libworldmodel.client.Response;
 
 @Path("/snapshot")

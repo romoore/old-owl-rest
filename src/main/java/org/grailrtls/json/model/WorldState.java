@@ -1,4 +1,4 @@
-package org.grailrtls.json;
+package org.grailrtls.json.model;
 
 import java.util.Arrays;
 

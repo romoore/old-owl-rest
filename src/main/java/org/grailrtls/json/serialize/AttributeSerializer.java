@@ -1,4 +1,4 @@
-package org.grailrtls.json;
+package org.grailrtls.json.serialize;
 
 import java.io.IOException;
 
@@ -6,6 +6,7 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.SerializerProvider;
+import org.grailrtls.json.model.Attribute;
 import org.grailrtls.libcommon.util.NumericUtils;
 import org.grailrtls.libworldmodel.types.DataConverter;
 
