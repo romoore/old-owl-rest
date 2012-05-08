@@ -1,7 +1,7 @@
 package org.grailrtls.json;
 
 import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
-import com.sun.jersey.api.container.grizzly2.GrizzlyWebContainerFactory;
+
 import com.sun.jersey.api.core.ApplicationAdapter;
 import com.sun.jersey.api.json.JSONConfiguration;
 
@@ -29,7 +29,12 @@ public class Main {
   }
 
   private static URI getBaseURI() {
-    return UriBuilder.fromUri("http://localhost/grailrest/").port(getPort(9998)).build();
+    String bindHost = System.getProperty("grail.bindhost");
+    if(bindHost == null){
+      bindHost = "localhost";
+    }
+    
+    return UriBuilder.fromUri("http://" + bindHost + "/grailrest/").port(getPort(9998)).build();
   }
 
   public static final URI BASE_URI = getBaseURI();

@@ -28,17 +28,14 @@ public class RangeResource {
 
     ArrayList<WorldState> respStates = new ArrayList<WorldState>();
     while (!resp.isComplete() && !resp.isError()) {
-      System.out.println("Processing next...");
       try {
         state = resp.next();
       } catch (Exception e) {
         e.printStackTrace();
         return respStates.toArray(new WorldState[] {});
       }
-      System.out.println("Got next...");
 
       if (resp == null || state == null || state.getURIs().size() == 0) {
-        System.out.println("No response.");
         return respStates.toArray(new WorldState[] {});
       }
 
@@ -65,8 +62,7 @@ public class RangeResource {
       }
     }
     
-    System.out.println("All done.");
-
+    
     return respStates.toArray(new WorldState[]{});
 
   }
