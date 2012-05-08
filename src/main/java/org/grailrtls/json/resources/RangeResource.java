@@ -36,9 +36,7 @@ public class RangeResource {
       try {
         Thread.sleep(1);
       } catch (InterruptedException ie) {
-
-      } finally {
-        continue;
+        // Ignored
       }
 
     }
