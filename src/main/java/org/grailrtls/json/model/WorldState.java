@@ -1,5 +1,6 @@
 package org.grailrtls.json.model;
 
+import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
 import org.grailrtls.libworldmodel.types.DataConverter;
@@ -42,6 +43,22 @@ public class WorldState {
 			}
 		}
 		return sb.toString();
+	}
+	
+	public static WorldState getErrorState(final String type, final String message){
+		 WorldState errState = new WorldState();
+	      errState.setUri(type);
+	      Attribute errAttr = new Attribute();
+	      errAttr.setAttributeName("error.message");
+	      try {
+	        errAttr.setData(message.getBytes("UTF-16BE"));
+	      } catch (UnsupportedEncodingException e) {
+	        // FIXME: Handle this when we're ready to release.
+	        // This really shouldn't happen...
+	      }
+	      errAttr.setOriginName("grail-rest-server");
+	      errState.setAttributes(new Attribute[] { errAttr });
+	      return errState;
 	}
 
 }

@@ -20,78 +20,83 @@ import org.grailrtls.libworldmodel.client.StepResponse;
 @Path("/range")
 public class RangeResource {
 
-  @Produces(MediaType.APPLICATION_JSON)
-  @GET
-  public WorldState[] getRange(@QueryParam("uri") final String uri,
-      @QueryParam("attribute") @DefaultValue(".*") final String attribute,
-      @QueryParam("start") final long start, @QueryParam("end") final long end) {
+	@Produces(MediaType.APPLICATION_JSON)
+	@GET
+	public WorldState[] getRange(
+			@QueryParam("uri") final String uri,
+			@QueryParam("attribute") @DefaultValue(".*") final String attribute,
+			@QueryParam("start") final Long start,
+			@QueryParam("end") final Long end) {
 
-    StepResponse resp = null;
-    resp = WorldModelJson.cwc.getRangeRequest(uri, start, end, attribute);
-    org.grailrtls.libworldmodel.client.WorldState state;
+		if (uri == null || uri.trim().length() == 0) {
+			return new WorldState[] { WorldState
+					.getErrorState("error.missing parameter", "Missing required parameter \"uri\".") };
+		}
+		if (start == null) {
+			return new WorldState[] { WorldState
+					.getErrorState("error.missing parameter", "Missing required parameter \"start\".") };
+		}
 
-    ArrayList<WorldState> respStates = new ArrayList<WorldState>();
-    while (!resp.isComplete() && !resp.isError()) {
+		if (end == null) {
+			return new WorldState[] { WorldState
+					.getErrorState("error.missing parameter", "Missing required parameter \"end\".") };
+		}
+		StepResponse resp = null;
+		resp = WorldModelJson.cwc.getRangeRequest(uri, start, end, attribute);
+		org.grailrtls.libworldmodel.client.WorldState state;
 
-      try {
-        Thread.sleep(1);
-      } catch (InterruptedException ie) {
-        // Ignored
-      }
+		ArrayList<WorldState> respStates = new ArrayList<WorldState>();
+		while (!resp.isComplete() && !resp.isError()) {
 
-    }
+			try {
+				Thread.sleep(1);
+			} catch (InterruptedException ie) {
+				// Ignored
+			}
 
-    if (resp.isError()) {
-      WorldState errState = new WorldState();
-      errState.setUri("error");
-      Attribute errAttr = new Attribute();
-      errAttr.setAttributeName("message");
-      try {
-        errAttr.setData(resp.getError().getMessage().getBytes("UTF-16BE"));
-      } catch (UnsupportedEncodingException e) {
-        // FIXME: Handle this when we're ready to release.
-        // This really shouldn't happen...
-      }
-      errState.setAttributes(new Attribute[] { errAttr });
-      return new WorldState[] { errState };
-    }
+		}
 
-    while (resp.hasNext()) {
-      try {
-        state = resp.next();
-      } catch (Exception e) {
-        e.printStackTrace();
-        break;
-      }
+		if (resp.isError()) {
+			return new WorldState[] { WorldState.getErrorState("error.service", resp.getError()
+					.getMessage()) };
+		}
 
-      if (resp == null || state == null || state.getURIs().size() == 0) {
-        return respStates.toArray(new WorldState[] {});
-      }
+		while (resp.hasNext()) {
+			try {
+				state = resp.next();
+			} catch (Exception e) {
+				e.printStackTrace();
+				break;
+			}
 
-      for (String rUri : state.getURIs()) {
+			if (resp == null || state == null || state.getURIs().size() == 0) {
+				return respStates.toArray(new WorldState[] {});
+			}
 
-        WorldState iState = new WorldState();
-        iState.setUri(rUri);
+			for (String rUri : state.getURIs()) {
 
-        Collection<org.grailrtls.libworldmodel.client.protocol.messages.Attribute> rAttrs = state
-            .getState(rUri);
-        Attribute[] attrs = new Attribute[rAttrs.size()];
-        int j = 0;
-        for (org.grailrtls.libworldmodel.client.protocol.messages.Attribute a : rAttrs) {
-          Attribute newAttr = new Attribute();
-          newAttr.setAttributeName(a.getAttributeName());
-          newAttr.setOriginName(a.getOriginName());
-          newAttr.setCreationDate(a.getCreationDate());
-          newAttr.setExpirationDate(a.getExpirationDate());
-          newAttr.setData(a.getData());
-          attrs[j++] = newAttr;
-        }
-        iState.setAttributes(attrs);
-        respStates.add(iState);
-      }
-    }
+				WorldState iState = new WorldState();
+				iState.setUri(rUri);
 
-    return respStates.toArray(new WorldState[] {});
+				Collection<org.grailrtls.libworldmodel.client.protocol.messages.Attribute> rAttrs = state
+						.getState(rUri);
+				Attribute[] attrs = new Attribute[rAttrs.size()];
+				int j = 0;
+				for (org.grailrtls.libworldmodel.client.protocol.messages.Attribute a : rAttrs) {
+					Attribute newAttr = new Attribute();
+					newAttr.setAttributeName(a.getAttributeName());
+					newAttr.setOriginName(a.getOriginName());
+					newAttr.setCreationDate(a.getCreationDate());
+					newAttr.setExpirationDate(a.getExpirationDate());
+					newAttr.setData(a.getData());
+					attrs[j++] = newAttr;
+				}
+				iState.setAttributes(attrs);
+				respStates.add(iState);
+			}
+		}
 
-  }
+		return respStates.toArray(new WorldState[] {});
+
+	}
 }
