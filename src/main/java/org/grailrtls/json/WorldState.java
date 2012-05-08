@@ -2,7 +2,6 @@ package org.grailrtls.json;
 
 import java.util.Arrays;
 
-import org.grailrtls.libworldmodel.client.protocol.messages.Attribute;
 import org.grailrtls.libworldmodel.types.DataConverter;
 
 public class WorldState {

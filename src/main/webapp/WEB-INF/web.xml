@@ -20,6 +20,6 @@
 
 	<servlet-mapping>
 		<servlet-name>jersey-servlet</servlet-name>
-		<url-pattern>/rest/*</url-pattern>
+		<url-pattern>/snapshot/*</url-pattern>
 	</servlet-mapping>
 </web-app>

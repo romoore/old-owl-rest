@@ -32,9 +32,15 @@
 		<dependency>
 			<groupId>org.grailrtls</groupId>
 			<artifactId>libworldmodel</artifactId>
-			<version>3.0.2</version>
+			<version>3.0.4-SNAPSHOT</version>
 			<type>jar</type>
 		</dependency>
+		<dependency>
+      <groupId>org.grailrtls</groupId>
+      <artifactId>libcommon</artifactId>
+      <version>3.0.4-SNAPSHOT</version>
+      <type>jar</type>
+    </dependency>
 		<dependency>
 			<groupId>org.apache.mina</groupId>
 			<artifactId>mina-core</artifactId>
