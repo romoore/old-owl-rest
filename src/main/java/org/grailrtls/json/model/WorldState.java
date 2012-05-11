@@ -3,8 +3,6 @@ package org.grailrtls.json.model;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
-import org.grailrtls.libworldmodel.types.DataConverter;
-
 public class WorldState {
 	private String uri;
 	private Attribute[] attributes;
