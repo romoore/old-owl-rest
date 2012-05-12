@@ -9,6 +9,7 @@ import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.module.SimpleModule;
 import org.grailrtls.json.resources.RangeResource;
+import org.grailrtls.json.resources.SearchResource;
 import org.grailrtls.json.resources.SnapshotResource;
 import org.grailrtls.libworldmodel.client.ClientWorldConnection;
 
@@ -39,6 +40,7 @@ public class WorldModelJson extends Application {
     // register root resources
     classes.add(SnapshotResource.class);
     classes.add(RangeResource.class);
+    classes.add(SearchResource.class);
 
     // register Jackson ObjectMapper resolver
     classes.add(ObjectMapper.class);

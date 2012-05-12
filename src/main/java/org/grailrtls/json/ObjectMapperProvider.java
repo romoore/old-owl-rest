@@ -7,10 +7,12 @@ import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.module.SimpleModule;
 import org.grailrtls.json.model.Attribute;
-import org.grailrtls.json.model.ResponseWrapper;
+import org.grailrtls.json.model.SearchWrapper;
+import org.grailrtls.json.model.WorldStateWrapper;
 import org.grailrtls.json.model.WorldState;
 import org.grailrtls.json.serialize.AttributeSerializer;
-import org.grailrtls.json.serialize.ResponseSerializer;
+import org.grailrtls.json.serialize.SearchSerializer;
+import org.grailrtls.json.serialize.WSWSerializer;
 import org.grailrtls.json.serialize.WorldStateSerializer;
 
 @Provider
@@ -24,7 +26,8 @@ public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
         null));
     module.addSerializer(Attribute.class, new AttributeSerializer());
     module.addSerializer(WorldState.class, new WorldStateSerializer());
-    module.addSerializer(ResponseWrapper.class, new ResponseSerializer());
+    module.addSerializer(WorldStateWrapper.class, new WSWSerializer());
+    module.addSerializer(SearchWrapper.class, new SearchSerializer());
     this.mapper.registerModule(module);
   }
 

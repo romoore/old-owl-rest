@@ -1,6 +1,6 @@
 package org.grailrtls.json.model;
 
-public class ResponseWrapper {
+public class WorldStateWrapper {
   private WorldState[] response;
   private String callback;
 

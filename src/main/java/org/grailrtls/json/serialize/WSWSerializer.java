@@ -6,12 +6,12 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.SerializerProvider;
-import org.grailrtls.json.model.ResponseWrapper;
+import org.grailrtls.json.model.WorldStateWrapper;
 import org.grailrtls.json.model.WorldState;
 
-public class ResponseSerializer extends JsonSerializer<ResponseWrapper> {
+public class WSWSerializer extends JsonSerializer<WorldStateWrapper> {
   @Override
-  public void serialize(ResponseWrapper wrapper, JsonGenerator arg1,
+  public void serialize(WorldStateWrapper wrapper, JsonGenerator arg1,
       SerializerProvider arg2) throws IOException, JsonGenerationException {
 
     String callback = wrapper.getCallback();

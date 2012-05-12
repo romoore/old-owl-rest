@@ -11,7 +11,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.grailrtls.json.WorldModelJson;
 import org.grailrtls.json.model.Attribute;
-import org.grailrtls.json.model.ResponseWrapper;
+import org.grailrtls.json.model.WorldStateWrapper;
 import org.grailrtls.json.model.WorldState;
 import org.grailrtls.libworldmodel.client.Response;
 
@@ -20,13 +20,13 @@ public class SnapshotResource {
 
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
-	public ResponseWrapper getCurrentSnapshot(
+	public WorldStateWrapper getCurrentSnapshot(
 			@QueryParam("uri") final String uri,
 			@QueryParam("attribute") @DefaultValue(".*") final String attribute,
 			@QueryParam("timestamp") @DefaultValue("0") final long timestamp,
 			@QueryParam("callback") @DefaultValue("") final String callback) {
 
-	  ResponseWrapper wrapper = new ResponseWrapper();
+	  WorldStateWrapper wrapper = new WorldStateWrapper();
 	  wrapper.setCallback(callback);
 	  
 	  
