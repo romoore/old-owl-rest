@@ -11,6 +11,7 @@ import javax.ws.rs.core.MediaType;
 
 import org.grailrtls.json.WorldModelJson;
 import org.grailrtls.json.model.Attribute;
+import org.grailrtls.json.model.ResponseWrapper;
 import org.grailrtls.json.model.WorldState;
 import org.grailrtls.libworldmodel.client.Response;
 
@@ -19,14 +20,21 @@ public class SnapshotResource {
 
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
-	public WorldState[] getCurrentSnapshot(
+	public ResponseWrapper getCurrentSnapshot(
 			@QueryParam("uri") final String uri,
 			@QueryParam("attribute") @DefaultValue(".*") final String attribute,
-			@QueryParam("timestamp") @DefaultValue("0") final long timestamp) {
+			@QueryParam("timestamp") @DefaultValue("0") final long timestamp,
+			@QueryParam("callback") @DefaultValue("") final String callback) {
 
+	  ResponseWrapper wrapper = new ResponseWrapper();
+	  wrapper.setCallback(callback);
+	  
+	  
 		if (uri == null || uri.trim().length() == 0) {
-			return new WorldState[] { WorldState
-					.getErrorState("error.missing parameter", "Missing required parameter \"uri\".") };
+			WorldState errState =  WorldState
+					.getErrorState("error.missing parameter", "Missing required parameter \"uri\".");
+			wrapper.setResponse(new WorldState[]{errState});
+			return wrapper;
 		}
 		Response resp = null;
 		if (timestamp == 0) {
@@ -39,12 +47,15 @@ public class SnapshotResource {
 		try {
 			state = resp.get();
 		} catch (Exception e) {
-			e.printStackTrace();
-			return new WorldState[] {};
+		  WorldState errState =  WorldState
+          .getErrorState("error.internal", e.getMessage());
+      wrapper.setResponse(new WorldState[]{errState});
+      return wrapper;
 		}
 
 		if (resp == null || state == null || state.getURIs().size() == 0) {
-			return new WorldState[] {};
+      wrapper.setResponse(new WorldState[]{new WorldState()});
+      return wrapper;
 		}
 
 		WorldState[] respStates = new WorldState[state.getURIs().size()];
@@ -70,8 +81,10 @@ public class SnapshotResource {
 			iState.setAttributes(attrs);
 			respStates[i++] = iState;
 		}
+		
+		wrapper.setResponse(respStates);
 
-		return respStates;
+		return wrapper;
 
 	}
 }

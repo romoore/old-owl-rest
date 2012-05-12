@@ -3,7 +3,11 @@ package org.grailrtls.json.model;
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
 
+import org.codehaus.jackson.annotate.JsonIgnore;
+
 public class WorldState {
+  
+  @JsonIgnore
 	private String uri;
 	private Attribute[] attributes;
 
@@ -58,5 +62,4 @@ public class WorldState {
 	      errState.setAttributes(new Attribute[] { errAttr });
 	      return errState;
 	}
-
 }
