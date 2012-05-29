@@ -1,4 +1,4 @@
-package org.grailrtls.json.model;
+package org.makesense.rest.model;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;

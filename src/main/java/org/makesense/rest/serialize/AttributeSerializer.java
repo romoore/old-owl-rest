@@ -1,4 +1,4 @@
-package org.grailrtls.json.serialize;
+package org.makesense.rest.serialize;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -9,9 +9,9 @@ import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.SerializerProvider;
 import org.codehaus.jackson.map.util.StdDateFormat;
-import org.grailrtls.json.model.Attribute;
 import org.grailrtls.libcommon.util.NumericUtils;
 import org.grailrtls.libworldmodel.types.DataConverter;
+import org.makesense.rest.model.Attribute;
 
 public class AttributeSerializer extends JsonSerializer<Attribute> {
 
@@ -21,8 +21,8 @@ public class AttributeSerializer extends JsonSerializer<Attribute> {
     String dataAsJson = NumericUtils.toEmptyHexString(arg0.getData());
     if (arg0.getData() != null) {
       try {
-        dataAsJson = String.valueOf(DataConverter.decodeUri(
-            arg0.getAttributeName(), arg0.getData()));
+        dataAsJson = DataConverter.asString(
+            arg0.getAttributeName(), arg0.getData());
       } catch (IllegalArgumentException e) {
         // No known decoder for this type, stick to hex string...
       }

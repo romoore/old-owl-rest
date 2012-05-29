@@ -1,4 +1,4 @@
-package org.grailrtls.json.resources;
+package org.makesense.rest.resources;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -11,11 +11,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.grailrtls.json.WorldModelJson;
-import org.grailrtls.json.model.Attribute;
-import org.grailrtls.json.model.WorldState;
 import org.grailrtls.libworldmodel.client.Response;
 import org.grailrtls.libworldmodel.client.StepResponse;
+import org.makesense.rest.WorldModelJson;
+import org.makesense.rest.model.Attribute;
+import org.makesense.rest.model.WorldState;
 
 @Path("/range")
 public class RangeResource {

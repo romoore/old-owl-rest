@@ -1,4 +1,4 @@
-package org.grailrtls.json;
+package org.makesense.rest;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
@@ -6,14 +6,14 @@ import javax.ws.rs.ext.Provider;
 import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.module.SimpleModule;
-import org.grailrtls.json.model.Attribute;
-import org.grailrtls.json.model.SearchWrapper;
-import org.grailrtls.json.model.WorldStateWrapper;
-import org.grailrtls.json.model.WorldState;
-import org.grailrtls.json.serialize.AttributeSerializer;
-import org.grailrtls.json.serialize.SearchSerializer;
-import org.grailrtls.json.serialize.WSWSerializer;
-import org.grailrtls.json.serialize.WorldStateSerializer;
+import org.makesense.rest.model.Attribute;
+import org.makesense.rest.model.SearchWrapper;
+import org.makesense.rest.model.WorldState;
+import org.makesense.rest.model.WorldStateWrapper;
+import org.makesense.rest.serialize.AttributeSerializer;
+import org.makesense.rest.serialize.SearchSerializer;
+import org.makesense.rest.serialize.WSWSerializer;
+import org.makesense.rest.serialize.WorldStateSerializer;
 
 @Provider
 public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {

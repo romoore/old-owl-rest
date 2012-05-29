@@ -1,4 +1,4 @@
-package org.grailrtls.json;
+package org.makesense.rest;
 
 import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
 
@@ -18,7 +18,7 @@ public class Main {
 
   private static int getPort(int defaultPort) {
     // grab port from environment, otherwise fall back to default port 9998
-    String httpPort = System.getProperty("jersey.test.port");
+    String httpPort = System.getProperty("bind.port");
     if (null != httpPort) {
       try {
         return Integer.parseInt(httpPort);
@@ -29,7 +29,7 @@ public class Main {
   }
 
   private static URI getBaseURI() {
-    String bindHost = System.getProperty("grail.bindhost");
+    String bindHost = System.getProperty("bind.host");
     if(bindHost == null){
       bindHost = "localhost";
     }

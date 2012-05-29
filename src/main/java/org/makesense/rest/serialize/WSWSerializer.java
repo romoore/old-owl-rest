@@ -1,4 +1,4 @@
-package org.grailrtls.json.serialize;
+package org.makesense.rest.serialize;
 
 import java.io.IOException;
 
@@ -6,8 +6,8 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.SerializerProvider;
-import org.grailrtls.json.model.WorldStateWrapper;
-import org.grailrtls.json.model.WorldState;
+import org.makesense.rest.model.WorldState;
+import org.makesense.rest.model.WorldStateWrapper;
 
 public class WSWSerializer extends JsonSerializer<WorldStateWrapper> {
   @Override

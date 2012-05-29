@@ -1,4 +1,4 @@
-package org.grailrtls.json;
+package org.makesense.rest;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -8,10 +8,10 @@ import javax.ws.rs.core.Application;
 import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.module.SimpleModule;
-import org.grailrtls.json.resources.RangeResource;
-import org.grailrtls.json.resources.SearchResource;
-import org.grailrtls.json.resources.SnapshotResource;
 import org.grailrtls.libworldmodel.client.ClientWorldConnection;
+import org.makesense.rest.resources.RangeResource;
+import org.makesense.rest.resources.SearchResource;
+import org.makesense.rest.resources.SnapshotResource;
 
 public class WorldModelJson extends Application {
 
@@ -26,7 +26,7 @@ public class WorldModelJson extends Application {
     }
     
     if(!cwc.connect()){
-      throw new RuntimeException("Unable to connect to world mode @" + cwc.toString());
+      throw new RuntimeException("Unable to connect to world model @" + cwc.toString());
     }
     
     

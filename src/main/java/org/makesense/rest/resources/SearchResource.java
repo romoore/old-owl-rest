@@ -1,4 +1,4 @@
-package org.grailrtls.json.resources;
+package org.makesense.rest.resources;
 
 import java.util.Collection;
 
@@ -9,12 +9,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.grailrtls.json.WorldModelJson;
-import org.grailrtls.json.model.Attribute;
-import org.grailrtls.json.model.SearchWrapper;
-import org.grailrtls.json.model.WorldStateWrapper;
-import org.grailrtls.json.model.WorldState;
 import org.grailrtls.libworldmodel.client.Response;
+import org.makesense.rest.WorldModelJson;
+import org.makesense.rest.model.Attribute;
+import org.makesense.rest.model.SearchWrapper;
+import org.makesense.rest.model.WorldState;
+import org.makesense.rest.model.WorldStateWrapper;
 
 @Path("/search")
 public class SearchResource {

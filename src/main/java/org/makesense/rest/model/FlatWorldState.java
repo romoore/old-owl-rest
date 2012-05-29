@@ -1,4 +1,4 @@
-package org.grailrtls.json.model;
+package org.makesense.rest.model;
 
 public class FlatWorldState {
 	protected String uri;
