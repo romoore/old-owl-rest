@@ -1,4 +1,4 @@
-package org.makesense.rest.model;
+package com.owlplatform.rest.model;
 
 public class FlatWorldState {
 	protected String uri;

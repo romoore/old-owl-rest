@@ -1,4 +1,4 @@
-package org.makesense.rest;
+package com.owlplatform.rest;
 
 import javax.ws.rs.ext.ContextResolver;
 import javax.ws.rs.ext.Provider;
@@ -6,14 +6,15 @@ import javax.ws.rs.ext.Provider;
 import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.module.SimpleModule;
-import org.makesense.rest.model.Attribute;
-import org.makesense.rest.model.SearchWrapper;
-import org.makesense.rest.model.WorldState;
-import org.makesense.rest.model.WorldStateWrapper;
-import org.makesense.rest.serialize.AttributeSerializer;
-import org.makesense.rest.serialize.SearchSerializer;
-import org.makesense.rest.serialize.WSWSerializer;
-import org.makesense.rest.serialize.WorldStateSerializer;
+
+import com.owlplatform.rest.model.Attribute;
+import com.owlplatform.rest.model.SearchWrapper;
+import com.owlplatform.rest.model.WorldState;
+import com.owlplatform.rest.model.WorldStateWrapper;
+import com.owlplatform.rest.serialize.AttributeSerializer;
+import com.owlplatform.rest.serialize.SearchSerializer;
+import com.owlplatform.rest.serialize.WSWSerializer;
+import com.owlplatform.rest.serialize.WorldStateSerializer;
 
 @Provider
 public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {

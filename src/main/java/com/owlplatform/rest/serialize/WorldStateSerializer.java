@@ -1,4 +1,4 @@
-package org.makesense.rest.serialize;
+package com.owlplatform.rest.serialize;
 
 import java.io.IOException;
 
@@ -6,7 +6,8 @@ import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.SerializerProvider;
-import org.makesense.rest.model.WorldState;
+
+import com.owlplatform.rest.model.WorldState;
 
 public class WorldStateSerializer extends JsonSerializer<WorldState>{
 	 @Override

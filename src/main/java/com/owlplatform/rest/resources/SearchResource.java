@@ -1,4 +1,4 @@
-package org.makesense.rest.resources;
+package com.owlplatform.rest.resources;
 
 import java.util.Collection;
 
@@ -9,12 +9,13 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.grailrtls.libworldmodel.client.Response;
-import org.makesense.rest.WorldModelJson;
-import org.makesense.rest.model.Attribute;
-import org.makesense.rest.model.SearchWrapper;
-import org.makesense.rest.model.WorldState;
-import org.makesense.rest.model.WorldStateWrapper;
+import com.owlplatform.worldmodel.client.Response;
+
+import com.owlplatform.rest.WorldModelJson;
+import com.owlplatform.rest.model.Attribute;
+import com.owlplatform.rest.model.SearchWrapper;
+import com.owlplatform.rest.model.WorldState;
+import com.owlplatform.rest.model.WorldStateWrapper;
 
 @Path("/search")
 public class SearchResource {

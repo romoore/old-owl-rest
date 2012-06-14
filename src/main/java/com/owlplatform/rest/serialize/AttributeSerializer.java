@@ -1,4 +1,4 @@
-package org.makesense.rest.serialize;
+package com.owlplatform.rest.serialize;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -9,9 +9,11 @@ import org.codehaus.jackson.JsonGenerator;
 import org.codehaus.jackson.map.JsonSerializer;
 import org.codehaus.jackson.map.SerializerProvider;
 import org.codehaus.jackson.map.util.StdDateFormat;
-import org.grailrtls.libcommon.util.NumericUtils;
-import org.grailrtls.libworldmodel.types.DataConverter;
-import org.makesense.rest.model.Attribute;
+
+
+import com.owlplatform.common.util.NumericUtils;
+import com.owlplatform.rest.model.Attribute;
+import com.owlplatform.worldmodel.types.DataConverter;
 
 public class AttributeSerializer extends JsonSerializer<Attribute> {
 

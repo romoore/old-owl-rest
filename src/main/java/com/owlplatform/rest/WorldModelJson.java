@@ -1,4 +1,4 @@
-package org.makesense.rest;
+package com.owlplatform.rest;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -8,10 +8,12 @@ import javax.ws.rs.core.Application;
 import org.codehaus.jackson.Version;
 import org.codehaus.jackson.map.ObjectMapper;
 import org.codehaus.jackson.map.module.SimpleModule;
-import org.grailrtls.libworldmodel.client.ClientWorldConnection;
-import org.makesense.rest.resources.RangeResource;
-import org.makesense.rest.resources.SearchResource;
-import org.makesense.rest.resources.SnapshotResource;
+
+import com.owlplatform.rest.resources.RangeResource;
+import com.owlplatform.rest.resources.SearchResource;
+import com.owlplatform.rest.resources.SnapshotResource;
+import com.owlplatform.worldmodel.client.ClientWorldConnection;
+
 
 public class WorldModelJson extends Application {
 

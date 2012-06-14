@@ -1,4 +1,4 @@
-package org.makesense.rest.resources;
+package com.owlplatform.rest.resources;
 
 import java.util.Collection;
 
@@ -9,11 +9,12 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.grailrtls.libworldmodel.client.Response;
-import org.makesense.rest.WorldModelJson;
-import org.makesense.rest.model.Attribute;
-import org.makesense.rest.model.WorldState;
-import org.makesense.rest.model.WorldStateWrapper;
+import com.owlplatform.worldmodel.client.Response;
+
+import com.owlplatform.rest.WorldModelJson;
+import com.owlplatform.rest.model.Attribute;
+import com.owlplatform.rest.model.WorldState;
+import com.owlplatform.rest.model.WorldStateWrapper;
 
 @Path("/snapshot")
 public class SnapshotResource {
@@ -43,7 +44,7 @@ public class SnapshotResource {
 			resp = WorldModelJson.cwc.getSnapshot(uri, timestamp, timestamp,
 					attribute);
 		}
-		org.grailrtls.libworldmodel.client.WorldState state;
+		com.owlplatform.worldmodel.client.WorldState state;
 		try {
 			state = resp.get();
 		} catch (Exception e) {
@@ -65,11 +66,11 @@ public class SnapshotResource {
 			WorldState iState = new WorldState();
 			iState.setUri(rUri);
 
-			Collection<org.grailrtls.libworldmodel.client.protocol.messages.Attribute> rAttrs = state
+			Collection<com.owlplatform.worldmodel.client.protocol.messages.Attribute> rAttrs = state
 					.getState(rUri);
 			Attribute[] attrs = new Attribute[rAttrs.size()];
 			int j = 0;
-			for (org.grailrtls.libworldmodel.client.protocol.messages.Attribute a : rAttrs) {
+			for (com.owlplatform.worldmodel.client.protocol.messages.Attribute a : rAttrs) {
 				Attribute newAttr = new Attribute();
 				newAttr.setAttributeName(a.getAttributeName());
 				newAttr.setOriginName(a.getOriginName());

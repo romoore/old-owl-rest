@@ -1,4 +1,4 @@
-package org.makesense.rest;
+package com.owlplatform.rest;
 
 import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
 
@@ -52,7 +52,7 @@ public class Main {
   }
   
   protected static String getWmHost(final String defaultHost){
-    String wmHost = System.getProperty("grail.wm.host");
+    String wmHost = System.getProperty("wm.host");
     if(wmHost == null){
       return defaultHost;
     }
@@ -60,7 +60,7 @@ public class Main {
   }
   
   protected static int getWmClientPort(final int defaultPort){
-    String portStr = System.getProperty("grail.wm.client.port");
+    String portStr = System.getProperty("wm.client.port");
     if(portStr == null){
       return defaultPort;
     }

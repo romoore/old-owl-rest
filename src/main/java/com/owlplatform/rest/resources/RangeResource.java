@@ -1,4 +1,4 @@
-package org.makesense.rest.resources;
+package com.owlplatform.rest.resources;
 
 import java.io.UnsupportedEncodingException;
 import java.util.ArrayList;
@@ -11,11 +11,11 @@ import javax.ws.rs.Produces;
 import javax.ws.rs.QueryParam;
 import javax.ws.rs.core.MediaType;
 
-import org.grailrtls.libworldmodel.client.Response;
-import org.grailrtls.libworldmodel.client.StepResponse;
-import org.makesense.rest.WorldModelJson;
-import org.makesense.rest.model.Attribute;
-import org.makesense.rest.model.WorldState;
+
+import com.owlplatform.rest.WorldModelJson;
+import com.owlplatform.rest.model.Attribute;
+import com.owlplatform.rest.model.WorldState;
+import com.owlplatform.worldmodel.client.StepResponse;
 
 @Path("/range")
 public class RangeResource {
@@ -43,7 +43,7 @@ public class RangeResource {
 		}
 		StepResponse resp = null;
 		resp = WorldModelJson.cwc.getRangeRequest(uri, start, end, attribute);
-		org.grailrtls.libworldmodel.client.WorldState state;
+		com.owlplatform.worldmodel.client.WorldState state;
 
 		ArrayList<WorldState> respStates = new ArrayList<WorldState>();
 		while (!resp.isComplete() && !resp.isError()) {
@@ -78,11 +78,11 @@ public class RangeResource {
 				WorldState iState = new WorldState();
 				iState.setUri(rUri);
 
-				Collection<org.grailrtls.libworldmodel.client.protocol.messages.Attribute> rAttrs = state
+				Collection<com.owlplatform.worldmodel.client.protocol.messages.Attribute> rAttrs = state
 						.getState(rUri);
 				Attribute[] attrs = new Attribute[rAttrs.size()];
 				int j = 0;
-				for (org.grailrtls.libworldmodel.client.protocol.messages.Attribute a : rAttrs) {
+				for (com.owlplatform.worldmodel.client.protocol.messages.Attribute a : rAttrs) {
 					Attribute newAttr = new Attribute();
 					newAttr.setAttributeName(a.getAttributeName());
 					newAttr.setOriginName(a.getOriginName());

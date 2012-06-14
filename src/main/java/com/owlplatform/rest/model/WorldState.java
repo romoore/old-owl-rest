@@ -1,4 +1,4 @@
-package org.makesense.rest.model;
+package com.owlplatform.rest.model;
 
 import java.io.UnsupportedEncodingException;
 import java.util.Arrays;
