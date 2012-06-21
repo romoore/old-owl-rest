@@ -35,7 +35,7 @@ public class SearchResource {
 			return wrapper;
 		}
 		
-		String[] matchingUris = WorldModelJson.cwc.searchURI(uri);
+		String[] matchingUris = WorldModelJson.cwc.searchId(uri);
 		wrapper.setUris(matchingUris);
 		
 		return wrapper;

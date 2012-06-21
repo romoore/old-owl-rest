@@ -66,11 +66,11 @@ public class SnapshotResource {
 			WorldState iState = new WorldState();
 			iState.setUri(rUri);
 
-			Collection<com.owlplatform.worldmodel.client.protocol.messages.Attribute> rAttrs = state
+			Collection<com.owlplatform.worldmodel.Attribute> rAttrs = state
 					.getState(rUri);
 			Attribute[] attrs = new Attribute[rAttrs.size()];
 			int j = 0;
-			for (com.owlplatform.worldmodel.client.protocol.messages.Attribute a : rAttrs) {
+			for (com.owlplatform.worldmodel.Attribute a : rAttrs) {
 				Attribute newAttr = new Attribute();
 				newAttr.setAttributeName(a.getAttributeName());
 				newAttr.setOriginName(a.getOriginName());

@@ -27,7 +27,7 @@ public class WorldModelJson extends Application {
       cwc.setPort(port);
     }
     
-    if(!cwc.connect()){
+    if(!cwc.connect(0)){
       throw new RuntimeException("Unable to connect to world model @" + cwc.toString());
     }
     
