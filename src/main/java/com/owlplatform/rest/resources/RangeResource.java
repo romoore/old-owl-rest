@@ -69,11 +69,11 @@ public class RangeResource {
 				break;
 			}
 
-			if (resp == null || state == null || state.getURIs().size() == 0) {
+			if (resp == null || state == null || state.getIdentifiers().size() == 0) {
 				return respStates.toArray(new WorldState[] {});
 			}
 
-			for (String rUri : state.getURIs()) {
+			for (String rUri : state.getIdentifiers()) {
 
 				WorldState iState = new WorldState();
 				iState.setUri(rUri);

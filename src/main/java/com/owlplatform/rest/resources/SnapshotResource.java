@@ -30,6 +30,8 @@ public class SnapshotResource {
 	  WorldStateWrapper wrapper = new WorldStateWrapper();
 	  wrapper.setCallback(callback);
 	  
+	  // TODO: Get data from 
+	  // WorldModelJson.currStatus;
 	  
 		if (uri == null || uri.trim().length() == 0) {
 			WorldState errState =  WorldState
@@ -54,14 +56,14 @@ public class SnapshotResource {
       return wrapper;
 		}
 
-		if (resp == null || state == null || state.getURIs().size() == 0) {
+		if (resp == null || state == null || state.getIdentifiers().size() == 0) {
       wrapper.setResponse(new WorldState[]{new WorldState()});
       return wrapper;
 		}
 
-		WorldState[] respStates = new WorldState[state.getURIs().size()];
+		WorldState[] respStates = new WorldState[state.getIdentifiers().size()];
 		int i = 0;
-		for (String rUri : state.getURIs()) {
+		for (String rUri : state.getIdentifiers()) {
 
 			WorldState iState = new WorldState();
 			iState.setUri(rUri);
