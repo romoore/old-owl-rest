@@ -16,11 +16,23 @@ import com.owlplatform.rest.serialize.SearchSerializer;
 import com.owlplatform.rest.serialize.WSWSerializer;
 import com.owlplatform.rest.serialize.WorldStateSerializer;
 
+/**
+ * Serialization provider for different object types.
+ * 
+ * @author Robert Moore
+ *
+ */
 @Provider
 public class ObjectMapperProvider implements ContextResolver<ObjectMapper> {
 
+  /**
+   * The singleton mapper to use.
+   */
   final ObjectMapper mapper;
 
+  /**
+   * Creates a new mapper provider with a singleton mapper.
+   */
   public ObjectMapperProvider() {
     this.mapper = new ObjectMapper();
     SimpleModule module = new SimpleModule("SimpleModule", new Version(1, 0, 0,

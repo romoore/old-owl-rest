@@ -23,19 +23,19 @@ public class SearchResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
 	public SearchWrapper getCurrentSnapshot(
-			@QueryParam("uri") final String uri,
-			@QueryParam("callback") @DefaultValue("") final String callback) {
+			@QueryParam("q") final String identifierRegex,
+			@QueryParam("cb") @DefaultValue("") final String callback) {
 
 	  SearchWrapper wrapper = new SearchWrapper();
 	  wrapper.setCallback(callback);
 	  
 	  
-		if (uri == null || uri.trim().length() == 0) {
+		if (identifierRegex == null || identifierRegex.trim().length() == 0) {
 			
 			return wrapper;
 		}
 		
-		String[] matchingUris = WorldModelJson.cwc.searchId(uri);
+		String[] matchingUris = WorldModelJson.searchIdentifiers(identifierRegex);
 		wrapper.setUris(matchingUris);
 		
 		return wrapper;

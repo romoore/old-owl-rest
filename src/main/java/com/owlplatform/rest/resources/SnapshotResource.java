@@ -16,45 +16,62 @@ import com.owlplatform.rest.model.Attribute;
 import com.owlplatform.rest.model.WorldState;
 import com.owlplatform.rest.model.WorldStateWrapper;
 
+/**
+ * Returns a snapshot of the world model at some point in time.  The time value of "0" (default)
+ * requests the current snapshot of the world model.
+ * @author Robert Moore
+ *
+ */
 @Path("/snapshot")
 public class SnapshotResource {
 
+	/**
+	 * Gets a snapshot from the world model for an Identifier regex and set of 
+	 * Attribute regexes.  If timestamp is specified, then it provides the snapshot
+	 * at that point in time, or if timestamp is missing or 0, provides the current snapshot.
+	 * @param identifierRegex the regular expression for matching Identifiers.
+	 * @param attributeRegex the regular expression for matching Attributes.
+	 * @param timestamp the time for the snapshot.
+	 * @param callback a callback function to wrap the JSON response.
+	 * @return a JSON-formatted response containing the requested snapshot, optionally wrapped in a 
+	 * callback function if the callback parameter is provided.
+	 */
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
-	public WorldStateWrapper getCurrentSnapshot(
-			@QueryParam("uri") final String uri,
-			@QueryParam("attribute") @DefaultValue(".*") final String attribute,
-			@QueryParam("timestamp") @DefaultValue("0") final long timestamp,
-			@QueryParam("callback") @DefaultValue("") final String callback) {
+	public WorldStateWrapper getSnapshot(
+			@QueryParam("q") final String identifierRegex,
+			@QueryParam("a") @DefaultValue(".*") final String attributeRegex,
+			@QueryParam("ts") @DefaultValue("0") final long timestamp,
+			@QueryParam("cb") @DefaultValue("") final String callback) {
 
 	  WorldStateWrapper wrapper = new WorldStateWrapper();
 	  wrapper.setCallback(callback);
 	  
-	  // TODO: Get data from 
-	  // WorldModelJson.currStatus;
 	  
-		if (uri == null || uri.trim().length() == 0) {
+		if (identifierRegex == null || identifierRegex.trim().length() == 0) {
 			WorldState errState =  WorldState
 					.getErrorState("error.missing parameter", "Missing required parameter \"uri\".");
 			wrapper.setResponse(new WorldState[]{errState});
 			return wrapper;
 		}
 		Response resp = null;
-		if (timestamp == 0) {
-			resp = WorldModelJson.cwc.getCurrentSnapshot(uri, attribute);
-		} else {
-			resp = WorldModelJson.cwc.getSnapshot(uri, timestamp, timestamp,
-					attribute);
-		}
 		com.owlplatform.worldmodel.client.WorldState state;
-		try {
-			state = resp.get();
-		} catch (Exception e) {
-		  WorldState errState =  WorldState
-          .getErrorState("error.internal", e.getMessage());
-      wrapper.setResponse(new WorldState[]{errState});
-      return wrapper;
+		if (timestamp == 0) {
+			state = WorldModelJson.getCurrentSnapshot(identifierRegex, attributeRegex);
+		} else {
+			resp = WorldModelJson.getSnapshot(identifierRegex, timestamp, 
+					attributeRegex);
+			try {
+	      state = resp.get();
+	    } catch (Exception e) {
+	      WorldState errState =  WorldState
+	          .getErrorState("error.internal", e.getMessage());
+	      wrapper.setResponse(new WorldState[]{errState});
+	      return wrapper;
+	    }
 		}
+		
+		
 
 		if (resp == null || state == null || state.getIdentifiers().size() == 0) {
       wrapper.setResponse(new WorldState[]{new WorldState()});

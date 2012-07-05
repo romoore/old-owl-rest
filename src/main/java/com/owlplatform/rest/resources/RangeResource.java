@@ -23,12 +23,12 @@ public class RangeResource {
 	@Produces(MediaType.APPLICATION_JSON)
 	@GET
 	public WorldState[] getRange(
-			@QueryParam("uri") final String uri,
-			@QueryParam("attribute") @DefaultValue(".*") final String attribute,
-			@QueryParam("start") final Long start,
-			@QueryParam("end") final Long end) {
+			@QueryParam("q") final String identifierRegex,
+			@QueryParam("a") @DefaultValue(".*") final String attributeRegex,
+			@QueryParam("st") final Long start,
+			@QueryParam("et") final Long end) {
 
-		if (uri == null || uri.trim().length() == 0) {
+		if (identifierRegex == null || identifierRegex.trim().length() == 0) {
 			return new WorldState[] { WorldState
 					.getErrorState("error.missing parameter", "Missing required parameter \"uri\".") };
 		}
@@ -42,7 +42,7 @@ public class RangeResource {
 					.getErrorState("error.missing parameter", "Missing required parameter \"end\".") };
 		}
 		StepResponse resp = null;
-		resp = WorldModelJson.cwc.getRangeRequest(uri, start, end, attribute);
+		resp = WorldModelJson.getRangeRequest(identifierRegex, start, end, attributeRegex);
 		com.owlplatform.worldmodel.client.WorldState state;
 
 		ArrayList<WorldState> respStates = new ArrayList<WorldState>();
