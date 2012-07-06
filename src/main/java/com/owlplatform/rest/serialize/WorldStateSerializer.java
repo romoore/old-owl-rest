@@ -15,7 +15,7 @@ public class WorldStateSerializer extends JsonSerializer<WorldState>{
 	      SerializerProvider arg2) throws IOException, JsonGenerationException {
 	   
 	    arg1.writeStartObject();
-	    arg1.writeStringField("uri", arg0.getUri());
+	    arg1.writeStringField("identifier", arg0.getIdentifier());
 	    arg1.writeObjectField("attributes", arg0.getAttributes());
 	    arg1.writeEndObject();
 

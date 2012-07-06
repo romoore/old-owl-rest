@@ -8,15 +8,15 @@ import org.codehaus.jackson.annotate.JsonIgnore;
 public class WorldState {
   
   @JsonIgnore
-	private String uri;
+	private String identifier;
 	private Attribute[] attributes;
 
-	public String getUri() {
-		return uri;
+	public String getIdentifier() {
+		return identifier;
 	}
 
-	public void setUri(String uri) {
-		this.uri = uri;
+	public void setIdentifier(String identifier) {
+		this.identifier = identifier;
 	}
 
 	public Attribute[] getAttributes() {
@@ -30,7 +30,7 @@ public class WorldState {
 	@Override
 	public String toString() {
 		StringBuilder sb = new StringBuilder();
-		sb.append(String.valueOf(this.uri));
+		sb.append(String.valueOf(this.identifier));
 
 		if (this.attributes != null) {
 
@@ -49,7 +49,7 @@ public class WorldState {
 	
 	public static WorldState getErrorState(final String type, final String message){
 		 WorldState errState = new WorldState();
-	      errState.setUri(type);
+	      errState.setIdentifier(type);
 	      Attribute errAttr = new Attribute();
 	      errAttr.setAttributeName("error.message");
 	      try {

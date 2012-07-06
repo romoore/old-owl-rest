@@ -89,7 +89,7 @@ public class WorldModelAccess {
             continue;
           }
         }
-
+        WorldModelAccess.this.currentState.clear();
         StepResponse stream = WorldModelAccess.this.cwc.getStreamRequest(".*",
 //            System.currentTimeMillis(), 0l, "(^(?!link).*)");
             System.currentTimeMillis(), 0l, "^[^(link|average )].*");
@@ -115,6 +115,7 @@ public class WorldModelAccess {
                 }
                 // Go through the current state, removing the obsoleted value if
                 // present
+                boolean matched = false;
                 for (Iterator<Attribute> iter = currAttribs.iterator(); iter
                     .hasNext();) {
                   Attribute cA = iter.next();
@@ -122,12 +123,15 @@ public class WorldModelAccess {
                       && nA.getOriginName().equals(cA.getOriginName())
                       && nA.getCreationDate() > cA.getCreationDate()) {
                     iter.remove();
+                    matched = true;
                     break;
                   }
                 }
                 // Add the new value
-                currAttribs.add(nA);
-                System.out.println("Updated " + nA);
+                if(matched){
+                  currAttribs.add(nA);
+                  System.out.println("Updated " + nA);
+                }
               }
             }
 
@@ -203,22 +207,26 @@ public class WorldModelAccess {
     WorldState state = new WorldState();
     Pattern idPattern = Pattern.compile(idRegex, Pattern.MULTILINE
         | Pattern.DOTALL);
+    log.debug("Generated Identifier pattern: {}", idPattern);
     Pattern[] attPatterns = null;
     if (attributeRegexes != null) {
       attPatterns = new Pattern[attributeRegexes.length];
       for (int i = 0; i < attributeRegexes.length; ++i) {
         attPatterns[i] = Pattern.compile(attributeRegexes[i], Pattern.MULTILINE
             | Pattern.DOTALL);
+        log.debug("Generated attribute pattern: {}",attPatterns[i]);
       }
     }
 
     idForLoop: for (String id : this.currentState.keySet()) {
       Matcher m = idPattern.matcher(id);
       if (!m.matches()) {
+        log.debug("ID {} does not match {}",id,idPattern);
         continue;
       }
       // Next check attributes
       if (attPatterns == null) {
+        log.info("No attributes to match. Adding {}", id);
         Collection<Attribute> matchedAttributes = this.currentState.get(id);
         state.addState(id, matchedAttributes);
         continue;
@@ -226,6 +234,7 @@ public class WorldModelAccess {
       Collection<Attribute> attributes = this.currentState.get(id);
       // No attributes, 
       if (attributes == null) {
+        log.info("No attributes available. Skipping {}", id);
         continue;
       }
       attrPatternForLoop: for (Pattern attributePattern : attPatterns) {
@@ -233,16 +242,19 @@ public class WorldModelAccess {
           Matcher am = attributePattern
               .matcher(chkAttribute.getAttributeName());
           if (am.matches()) {
+            log.debug("Matched {} with {}", attributePattern, chkAttribute.getAttributeName());
             // We got a match, so check the next attribute regex
             continue attrPatternForLoop;
           }
         }
+        log.debug("No match for pattern {}", attributePattern);
         /*
          * No match (Since we exited this loop). That means we can't add this
          * id, since not all attribute regexes matched
          */
         continue idForLoop;
       }
+      log.info("Matched all attribute patterns for {}",id);
       // Made it through all attribute regexes, so add the state
       state.addState(id, attributes);
     }

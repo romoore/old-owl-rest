@@ -50,7 +50,7 @@ public class SnapshotResource {
 	  
 		if (identifierRegex == null || identifierRegex.trim().length() == 0) {
 			WorldState errState =  WorldState
-					.getErrorState("error.missing parameter", "Missing required parameter \"uri\".");
+					.getErrorState("error.missing parameter", "Missing required parameter \"q\".");
 			wrapper.setResponse(new WorldState[]{errState});
 			return wrapper;
 		}
@@ -73,20 +73,20 @@ public class SnapshotResource {
 		
 		
 
-		if (resp == null || state == null || state.getIdentifiers().size() == 0) {
+		if (state == null || state.getIdentifiers().size() == 0) {
       wrapper.setResponse(new WorldState[]{new WorldState()});
       return wrapper;
 		}
 
 		WorldState[] respStates = new WorldState[state.getIdentifiers().size()];
 		int i = 0;
-		for (String rUri : state.getIdentifiers()) {
+		for (String rId : state.getIdentifiers()) {
 
 			WorldState iState = new WorldState();
-			iState.setUri(rUri);
+			iState.setIdentifier(rId);
 
 			Collection<com.owlplatform.worldmodel.Attribute> rAttrs = state
-					.getState(rUri);
+					.getState(rId);
 			Attribute[] attrs = new Attribute[rAttrs.size()];
 			int j = 0;
 			for (com.owlplatform.worldmodel.Attribute a : rAttrs) {

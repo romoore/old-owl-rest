@@ -24,10 +24,10 @@ public class SearchSerializer extends JsonSerializer<SearchWrapper> {
     }
 
     // arg1.writeStartArray();
-    if (wrapper.getUris() == null) {
+    if (wrapper.getIds() == null) {
       arg1.writeRaw("[]");
     } else {
-      arg1.writeObject(wrapper.getUris());
+      arg1.writeObject(wrapper.getIds());
     }
     // arg1.writeEndArray();
 

@@ -13,7 +13,7 @@ public class SearchWrapper {
     this.callback = callback;
   }
 
-  public String[] getUris() {
+  public String[] getIds() {
     return uris;
   }
 

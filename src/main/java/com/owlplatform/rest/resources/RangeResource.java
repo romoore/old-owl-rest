@@ -73,13 +73,13 @@ public class RangeResource {
 				return respStates.toArray(new WorldState[] {});
 			}
 
-			for (String rUri : state.getIdentifiers()) {
+			for (String rId : state.getIdentifiers()) {
 
 				WorldState iState = new WorldState();
-				iState.setUri(rUri);
+				iState.setIdentifier(rId);
 
 				Collection<com.owlplatform.worldmodel.Attribute> rAttrs = state
-						.getState(rUri);
+						.getState(rId);
 				Attribute[] attrs = new Attribute[rAttrs.size()];
 				int j = 0;
 				for (com.owlplatform.worldmodel.Attribute a : rAttrs) {
