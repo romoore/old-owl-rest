@@ -91,10 +91,13 @@ public class WorldModelAccess {
         }
 
         StepResponse stream = WorldModelAccess.this.cwc.getStreamRequest(".*",
-            System.currentTimeMillis(), 0l, ".*");
+//            System.currentTimeMillis(), 0l, "(^(?!link).*)");
+            System.currentTimeMillis(), 0l, "^[^(link|average )].*");
         while (!stream.isComplete() && !stream.isError()) {
           try {
+            System.out.println("Waiting for an update...");
             WorldState state = stream.next();
+            System.out.println(state.toString());
 
             for (String id : state.getIdentifiers()) {
               Collection<Attribute> newAttribs = state.getState(id);
@@ -124,6 +127,7 @@ public class WorldModelAccess {
                 }
                 // Add the new value
                 currAttribs.add(nA);
+                System.out.println("Updated " + nA);
               }
             }
 
@@ -166,6 +170,13 @@ public class WorldModelAccess {
     this.updateThread = new Thread(this.updater);
   }
 
+  /**
+   * Starts the updater thread processing updates.
+   */
+  public void startup(){
+    this.updateThread.start();
+  }
+  
   /**
    * Shuts down this accessor and performs any necessary clean-up.
    */
