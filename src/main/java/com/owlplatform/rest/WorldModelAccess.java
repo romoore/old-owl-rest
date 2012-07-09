@@ -92,7 +92,8 @@ public class WorldModelAccess {
         WorldModelAccess.this.currentState.clear();
         StepResponse stream = WorldModelAccess.this.cwc.getStreamRequest(".*",
 //            System.currentTimeMillis(), 0l, "(^(?!link).*)");
-            System.currentTimeMillis(), 0l, "^[^(link|average )].*");
+//            System.currentTimeMillis(), 0l, "^[^(link|average )].*");
+            System.currentTimeMillis(),0l,".*");
         while (!stream.isComplete() && !stream.isError()) {
           try {
             System.out.println("Waiting for an update...");
