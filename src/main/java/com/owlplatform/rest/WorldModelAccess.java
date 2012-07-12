@@ -19,8 +19,10 @@
 package com.owlplatform.rest;
 
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.Iterator;
 import java.util.Map;
+import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -82,7 +84,7 @@ public class WorldModelAccess {
     public void run() {
 
       while (this.keepRunning) {
-        while (!WorldModelAccess.this.cwc.isConnected()) {
+        while (!WorldModelAccess.this.cwc.isReady()) {
           try {
             Thread.sleep(500);
           } catch (InterruptedException e) {
@@ -91,9 +93,9 @@ public class WorldModelAccess {
         }
         WorldModelAccess.this.currentState.clear();
         StepResponse stream = WorldModelAccess.this.cwc.getStreamRequest(".*",
-//            System.currentTimeMillis(), 0l, "(^(?!link).*)");
-//            System.currentTimeMillis(), 0l, "^[^(link|average )].*");
-            System.currentTimeMillis(),0l,".*");
+        // System.currentTimeMillis(), 0l, "(^(?!link).*)");
+        // System.currentTimeMillis(), 0l, "^[^(link|average )].*");
+            System.currentTimeMillis(), 0l, ".*");
         while (!stream.isComplete() && !stream.isError()) {
           try {
             System.out.println("Waiting for an update...");
@@ -129,7 +131,7 @@ public class WorldModelAccess {
                   }
                 }
                 // Add the new value
-                if(matched){
+                if (matched) {
                   currAttribs.add(nA);
                   System.out.println("Updated " + nA);
                 }
@@ -168,7 +170,8 @@ public class WorldModelAccess {
    * Creates a new accessor for a world model with the specified client
    * connection parameters.
    * 
-   * @param cwc the client-world model connection to use.
+   * @param cwc
+   *          the client-world model connection to use.
    */
   public WorldModelAccess(final ClientWorldConnection cwc) {
     this.cwc = cwc;
@@ -178,10 +181,10 @@ public class WorldModelAccess {
   /**
    * Starts the updater thread processing updates.
    */
-  public void startup(){
+  public void startup() {
     this.updateThread.start();
   }
-  
+
   /**
    * Shuts down this accessor and performs any necessary clean-up.
    */
@@ -215,14 +218,14 @@ public class WorldModelAccess {
       for (int i = 0; i < attributeRegexes.length; ++i) {
         attPatterns[i] = Pattern.compile(attributeRegexes[i], Pattern.MULTILINE
             | Pattern.DOTALL);
-        log.debug("Generated attribute pattern: {}",attPatterns[i]);
+        log.debug("Generated attribute pattern: {}", attPatterns[i]);
       }
     }
 
-    idForLoop: for (String id : this.currentState.keySet()) {
+    for (String id : this.currentState.keySet()) {
       Matcher m = idPattern.matcher(id);
       if (!m.matches()) {
-        log.debug("ID {} does not match {}",id,idPattern);
+        log.debug("ID {} does not match {}", id, idPattern);
         continue;
       }
       // Next check attributes
@@ -233,31 +236,40 @@ public class WorldModelAccess {
         continue;
       }
       Collection<Attribute> attributes = this.currentState.get(id);
-      // No attributes, 
+      // No attributes,
       if (attributes == null) {
         log.info("No attributes available. Skipping {}", id);
         continue;
       }
-      attrPatternForLoop: for (Pattern attributePattern : attPatterns) {
-        for (Attribute chkAttribute : attributes) {
+
+      Set<Pattern> unmatched = new HashSet<Pattern>();
+      for (Pattern p : attPatterns) {
+        unmatched.add(p);
+      }
+      Set<Attribute> matched = new HashSet<Attribute>();
+
+      attLoop: for (Attribute chkAttribute : attributes) {
+        for (Pattern attributePattern : attPatterns) {
           Matcher am = attributePattern
               .matcher(chkAttribute.getAttributeName());
           if (am.matches()) {
-            log.debug("Matched {} with {}", attributePattern, chkAttribute.getAttributeName());
+            unmatched.remove(attributePattern);
+            matched.add(chkAttribute);
+            log.debug("Matched {} with {}", attributePattern,
+                chkAttribute.getAttributeName());
             // We got a match, so check the next attribute regex
-            continue attrPatternForLoop;
+            continue attLoop;
           }
         }
-        log.debug("No match for pattern {}", attributePattern);
-        /*
-         * No match (Since we exited this loop). That means we can't add this
-         * id, since not all attribute regexes matched
-         */
-        continue idForLoop;
+
       }
-      log.info("Matched all attribute patterns for {}",id);
-      // Made it through all attribute regexes, so add the state
-      state.addState(id, attributes);
+
+      if (unmatched.isEmpty()) {
+        log.info("Matched all attribute patterns for {}", id);
+        // Made it through all attribute regexes, so add the state
+        state.addState(id, matched);
+      }
+
     }
     // Return whatever we've matched
     return state;
