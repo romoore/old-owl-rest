@@ -7,6 +7,7 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 
+import com.sun.jersey.api.container.filter.GZIPContentEncodingFilter;
 import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
 import com.sun.jersey.api.core.ApplicationAdapter;
 import com.sun.jersey.api.json.JSONConfiguration;
@@ -78,6 +79,7 @@ public class Main {
    * @return an instance of a grizzly HTTP server
    * @throws IOException
    */
+  @SuppressWarnings("unchecked")
   protected static HttpServer startServer(final String host, final int cPort)
       throws IOException {
     // final Map<String, String> initParams = new HashMap<String, String>();
@@ -85,9 +87,10 @@ public class Main {
     wmServer = new WorldModelJson(host, cPort);
     ApplicationAdapter rc = new ApplicationAdapter(wmServer);
     rc.getFeatures().put(JSONConfiguration.FEATURE_POJO_MAPPING, Boolean.TRUE);
+    rc.getContainerResponseFilters().add(new GZIPContentEncodingFilter());
 
     System.out.println("Starting grizzly2...");
-    return GrizzlyServerFactory.createHttpServer(BASE_URI, rc);
+    return  GrizzlyServerFactory.createHttpServer(BASE_URI, rc);
   }
 
   /**
