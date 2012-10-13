@@ -1,7 +1,0 @@
-Steps to run the RESTful API.
-
-1) Make sure that a world model is running.
-2) Clean, build, and run the API:
-  mvn clean
-  mvn compile
-  mvn exec:java
