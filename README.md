@@ -11,7 +11,7 @@ running. Below is a list of all possible options:
 * __bind.host__: The hostname or IP address on which the REST server should bind.
   This option is useful if, for example, your server has multiple IP addresses
   and only one should host the server.  By default, the server will bind to
-  the wildcard interface, meaning all interfaces will be used.
+  the localhost interface, meaning only loopback connections are allowed.
 * __bind.port__: The TCP port on which the REST server should bind.  By default it
   will use port 9998.
 * __wm.host__: The hostname or IP address of the world model to connect to.  This
