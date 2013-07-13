@@ -2,7 +2,9 @@ package com.owlplatform.rest.serialize;
 
 import java.io.IOException;
 import java.text.DateFormat;
+import java.text.SimpleDateFormat;
 import java.util.Date;
+import java.util.TimeZone;
 
 import org.codehaus.jackson.JsonGenerationException;
 import org.codehaus.jackson.JsonGenerator;
@@ -17,6 +19,7 @@ import com.owlplatform.worldmodel.types.DataConverter;
 
 public class AttributeSerializer extends JsonSerializer<Attribute> {
 
+  
   @Override
   public void serialize(Attribute arg0, JsonGenerator arg1,
       SerializerProvider arg2) throws IOException, JsonGenerationException {
@@ -30,7 +33,9 @@ public class AttributeSerializer extends JsonSerializer<Attribute> {
       }
     }
     
-    DateFormat format = StdDateFormat.getBlueprintISO8601Format();
+    DateFormat format = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ssZ");
+    format.setTimeZone(TimeZone.getTimeZone("GMT"));
+    
     
     arg1.writeStartObject();
     arg1.writeStringField("attributeName", arg0.getAttributeName());
