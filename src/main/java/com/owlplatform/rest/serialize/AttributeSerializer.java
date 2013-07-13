@@ -1,7 +1,7 @@
 package com.owlplatform.rest.serialize;
 
 import java.io.IOException;
-import java.text.SimpleDateFormat;
+import java.text.DateFormat;
 import java.util.Date;
 
 import org.codehaus.jackson.JsonGenerationException;
@@ -30,7 +30,7 @@ public class AttributeSerializer extends JsonSerializer<Attribute> {
       }
     }
     
-    StdDateFormat format = new StdDateFormat();
+    DateFormat format = StdDateFormat.getBlueprintISO8601Format();
     
     arg1.writeStartObject();
     arg1.writeStringField("attributeName", arg0.getAttributeName());
