@@ -7,6 +7,8 @@ import javax.ws.rs.core.UriBuilder;
 
 import org.glassfish.grizzly.http.server.HttpServer;
 
+import com.owlplatform.worldmodel.types.DataConverter;
+import com.owlplatform.worldmodel.types.StringConverter;
 import com.sun.jersey.api.container.filter.GZIPContentEncodingFilter;
 import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
 import com.sun.jersey.api.core.ApplicationAdapter;
@@ -24,6 +26,11 @@ public class Main {
    * A reference to the WorldModelJson server to create.
    */
   private static WorldModelJson wmServer = null;
+  
+  static {
+    DataConverter.putConverter("location.name", StringConverter.get().getTypeName());
+    DataConverter.putConverter("displayName", "String");
+  }
 
   /**
    * Determines the default binding port for incoming HTTP connections to this
