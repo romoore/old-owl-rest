@@ -9,6 +9,7 @@ import org.glassfish.grizzly.http.server.HttpServer;
 
 import com.owlplatform.worldmodel.types.DataConverter;
 import com.owlplatform.worldmodel.types.StringConverter;
+import com.owlplatform.worldmodel.types.DoubleConverter;
 import com.sun.jersey.api.container.filter.GZIPContentEncodingFilter;
 import com.sun.jersey.api.container.grizzly2.GrizzlyServerFactory;
 import com.sun.jersey.api.core.ApplicationAdapter;
@@ -29,7 +30,8 @@ public class Main {
   
   static {
     DataConverter.putConverter("location.name", StringConverter.get().getTypeName());
-    DataConverter.putConverter("displayName", "String");
+    DataConverter.putConverter("displayName", StringConverter.get().getTypeName());
+		DataConverter.putConverter("temperature", DoubleConverter.get().getTypeName());
   }
 
   /**
