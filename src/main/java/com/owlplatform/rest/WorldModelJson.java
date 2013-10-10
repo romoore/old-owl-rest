@@ -14,6 +14,7 @@ import com.owlplatform.worldmodel.client.ClientWorldConnection;
 import com.owlplatform.worldmodel.client.Response;
 import com.owlplatform.worldmodel.client.StepResponse;
 import com.owlplatform.worldmodel.client.WorldState;
+import com.owlplatform.worldmodel.types.DataConverter;
 
 /**
  * Provides a JSON-formatted interface to the world model for web applications.
@@ -53,7 +54,12 @@ public class WorldModelJson extends Application {
       throw new RuntimeException("Unable to connect to world model @"
           + cwc.toString());
     }
-
+    
+    DataConverter.putConverter("displayName", "String");
+    DataConverter.putConverter("room", "String");
+    DataConverter.putConverter("alert.email", "String");
+    DataConverter.putConverter("alert.sms", "String");
+    
     wma = new WorldModelAccess(cwc);
     wma.startup();
 
