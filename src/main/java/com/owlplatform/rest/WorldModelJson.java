@@ -63,6 +63,7 @@ public class WorldModelJson extends Application {
     DataConverter.putConverter("wet", "Boolean");
     DataConverter.putConverter("closed", "Boolean");
 		DataConverter.putConverter("light level", "Integer");
+		DataConverter.putConverter("temperature.celsius", "Double");
     
     wma = new WorldModelAccess(cwc);
     wma.startup();
