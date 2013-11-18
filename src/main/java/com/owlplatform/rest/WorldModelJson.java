@@ -55,10 +55,13 @@ public class WorldModelJson extends Application {
           + cwc.toString());
     }
     
+    // Custom converters here
     DataConverter.putConverter("displayName", "String");
     DataConverter.putConverter("room", "String");
     DataConverter.putConverter("alert.email", "String");
     DataConverter.putConverter("alert.sms", "String");
+    DataConverter.putConverter("wet", "Boolean");
+    DataConverter.putConverter("closed", "Boolean");
     
     wma = new WorldModelAccess(cwc);
     wma.startup();
