@@ -62,6 +62,7 @@ public class WorldModelJson extends Application {
     DataConverter.putConverter("alert.sms", "String");
     DataConverter.putConverter("wet", "Boolean");
     DataConverter.putConverter("closed", "Boolean");
+		DataConverter.putConverter("light level", "Integer");
     
     wma = new WorldModelAccess(cwc);
     wma.startup();
